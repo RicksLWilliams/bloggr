@@ -19,7 +19,10 @@
     </div>
     <div class="row">
       <div class="col-11">
-        <div v-for="comment in blogComents" :commentData="comment" :key="comment._id">
+        <div class="comment" v-for="comment in blogComents" :commentData="comment" :key="comment._id">
+          <button type="button" class="close text-danger" @click="deleteComment('{{comment.id}}')">
+            <span >&times;</span>
+          </button>
           <p>Title: {{comment.body}}</p>
           <p>Email: {{comment.creatorEmail}}</p>
         </div>
@@ -52,6 +55,12 @@ export default {
     deleteBlog() {
       this.$router.push({ name: "Blogs" });
       this.$store.dispatch("deleteBlog", this.blog._id);
+    },
+    deleteComment(commentid) {
+      //this.$router.push({ name: "Blogs" });
+      console.log(commentid)
+      console.log("deleteComment", this.$commentid)
+      //this.$store.dispatch("deleteComment", this.comment._id);
     }
   },
   components: {CommentAdd}

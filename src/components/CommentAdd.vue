@@ -2,11 +2,11 @@
   <div class="create-comment border col-12">
     <form @submit.prevent="createComment()">
       <div class="form-group">
-        <label for="comment">Make</label>
+        <label for="comment">Comment</label>
         <input type="text" name="comment" id="" class="form-control" placeholder="enter comment..." aria-describedby="helpId"
           v-model="newComment.body" required>
       </div>
-      <button type="submit" class="btn btn-success"> Add Comment</button>
+      <button type="submit" class="btn btn-success">Add Comment</button>
     </form>
   </div>
 </template>

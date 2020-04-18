@@ -12,6 +12,17 @@
         <button v-if="$auth.isAuthenticated" type="button" class="close text-danger" @click="deleteBlog()">
             <span >&times;</span>
           </button>
+        <form @submit.prevent="changeBlog()">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="" class="form-control" placeholder="enter title..." aria-describedby="helpId" v-model="blogDetails.title" required>
+          </div>
+          <div class="form-group">
+            <label for="body">Body</label>
+            <input type="text" name="body" id="" class="form-control" placeholder="enter body..."   aria-describedby="helpId" v-model="blogDetails.body" required>
+          </div>
+          <button type="submit" class="btn btn-success">Save</button>
+        </form>
       </div>
     </div> 
     <div class="row">
@@ -22,21 +33,17 @@
     </div>
     <div class="row">
       <div class="col-11">
-        <div class="comment" v-for="comment in blogComents" :commentData="comment" :key="comment._id">
-          <button type="button" class="close text-danger" @click="deleteComment('{{comment.id}}')">
-            <span >&times;</span>
-          </button>
-          <p>Title: {{comment.body}}</p>
-          <p>Email: {{comment.creatorEmail}}</p>
-        </div>
+        <comment class="comment" v-for="comment in blogComents" :commentData="comment" :key="comment._id"></comment>
       </div>
     </div>
   </div>
+  
 </template>
 
 
 <script>
 import CommentAdd from "../components/CommentAdd";
+import Comment from "../components/Comment";
 export default {
   name: "blogDetails",
   data() {
@@ -56,19 +63,24 @@ export default {
   },
   methods: {
     deleteBlog() {
-      console.log("deleteBlog", this.blogDetails.id)
-      console.log("deleteBlog", this.blogDetails.id)
+      //console.log("deleteBlog", this.blogDetails.id)
+      //console.log("deleteBlog", this.blogDetails.id)
       this.$router.push({ name: "Home" });
       this.$store.dispatch("deleteBlog", this.blogDetails._id);
     },
-    deleteComment(commentid) {
+    changeBlog() {
+      //console.log("changeBlog", this.blogDetails)
+      //this.$router.push({ name: "Home" });
+      this.$store.dispatch("changeBlog", this.blogDetails);
+    },
+    //deleteComment(commentid) {
       //this.$router.push({ name: "Blogs" });
-      console.log(commentid)
-      console.log("deleteComment", this.$commentid)
+      //console.log(commentid)
+      //console.log("deleteComment", this.$commentid)
       //this.$store.dispatch("deleteComment", this.comment._id);
-    }
+    //}
   },
-  components: {CommentAdd}
+  components: {CommentAdd, Comment}
 };
 </script>
 

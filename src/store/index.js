@@ -44,7 +44,7 @@ export default new Vuex.Store({
     async getBlogs({ commit }) {
       try {
         let res = await api.get("blogs");
-        console.log(res.data);
+        //console.log(res.data);
         commit("setBlogs", res.data);
       } catch (error) {
         console.error(error);
@@ -53,8 +53,8 @@ export default new Vuex.Store({
     async getMyBlogs({ commit }) {
       try {
         let res = await api.get("profile/blogs");
-        console.log(res.data);
-        console.log("getMyBlogs")
+        //console.log(res.data);
+        //console.log("getMyBlogs")
         commit("setMyBlogs", res.data);
       } catch (error) {
         console.error(error);
@@ -63,18 +63,18 @@ export default new Vuex.Store({
     async getBlog({ commit }, blogId) {
       try {
         let res = await api.get(`blogs/${blogId}`);
-        console.log("getBlog",res.data);
+        //console.log("getBlog",res.data);
         commit("setActiveBlog", res.data);
       } catch (error) {
         console.error(error);
       }
     },
-    
+
 
     async createBlog({ commit }, newBlog) {
       try {
         let res = await api.post("blogs/",newBlog );
-        console.log("createBlog",res.data);
+        //console.log("createBlog",res.data);
         this.dispatch("getMyBlogs" )
       } catch (error) {
         console.error(error);
@@ -84,7 +84,7 @@ export default new Vuex.Store({
     async createComment({ commit }, newComment) {
       try {
         let res = await api.post("comments/",newComment );
-        console.log("createComment",res.data);
+        //console.log("createComment",res.data);
         this.dispatch("getBlog", newComment.blogId )
       } catch (error) {
         console.error(error);
@@ -92,10 +92,27 @@ export default new Vuex.Store({
     },
     async deleteBlog({ commit }, blogid) {
       try {
-        console.log("deleteBlog", blogid)
+        //console.log("deleteBlog", blogid)
         let res = await api.delete("blogs/"+blogid );
-        //console.log("deleteBlog",res.data);
         this.dispatch("getBlogs" )
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async changeBlog({ commit }, blog) {
+      try {
+        let res = await api.put("blogs/"+blog.id, blog  );
+        this.dispatch("getBlogs" )
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async deleteComment({ commit }, commentData) {
+      try {
+        let res = await api.delete("comments/" + commentData.id );
+        this.dispatch("getBlog" , commentData.blogId )
       } catch (error) {
         console.error(error);
       }

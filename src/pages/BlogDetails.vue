@@ -9,6 +9,9 @@
         <p>{{blogDetails.tags}}</p>
         <p>{{blogDetails.published}}</p>
         <p>{{blogDetails.creatorEmail}}</p>
+        <button v-if="$auth.isAuthenticated" type="button" class="close text-danger" @click="deleteBlog()">
+            <span >&times;</span>
+          </button>
       </div>
     </div> 
     <div class="row">
@@ -53,8 +56,10 @@ export default {
   },
   methods: {
     deleteBlog() {
-      this.$router.push({ name: "Blogs" });
-      this.$store.dispatch("deleteBlog", this.blog._id);
+      console.log("deleteBlog", this.blogDetails.id)
+      console.log("deleteBlog", this.blogDetails.id)
+      this.$router.push({ name: "Home" });
+      this.$store.dispatch("deleteBlog", this.blogDetails._id);
     },
     deleteComment(commentid) {
       //this.$router.push({ name: "Blogs" });

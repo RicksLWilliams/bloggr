@@ -69,8 +69,8 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+    
 
-    //createBlog
     async createBlog({ commit }, newBlog) {
       try {
         let res = await api.post("blogs/",newBlog );
@@ -86,6 +86,16 @@ export default new Vuex.Store({
         let res = await api.post("comments/",newComment );
         console.log("createComment",res.data);
         this.dispatch("getBlog", newComment.blogId )
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteBlog({ commit }, blogid) {
+      try {
+        console.log("deleteBlog", blogid)
+        let res = await api.delete("blogs/"+blogid );
+        //console.log("deleteBlog",res.data);
+        this.dispatch("getBlogs" )
       } catch (error) {
         console.error(error);
       }

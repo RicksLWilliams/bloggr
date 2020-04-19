@@ -9,20 +9,24 @@
         <p>{{blogDetails.tags}}</p>
         <p>{{blogDetails.published}}</p>
         <p>{{blogDetails.creatorEmail}}</p>
-        <button v-if="$auth.isAuthenticated" type="button" class="close text-danger" @click="deleteBlog()">
-            <span >&times;</span>
+
+        <div v-if="this.$auth.userInfo.email == this.blogDetails.creator.email"> 
+          <button v-if="$auth.isAuthenticated" type="button" class="close text-danger" @click="deleteBlog()">
+              <span >&times;</span>
           </button>
-        <form @submit.prevent="changeBlog()">
-          <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" name="title" id="" class="form-control" placeholder="enter title..." aria-describedby="helpId" v-model="blogDetails.title" required>
-          </div>
-          <div class="form-group">
-            <label for="body">Body</label>
-            <input type="text" name="body" id="" class="form-control" placeholder="enter body..."   aria-describedby="helpId" v-model="blogDetails.body" required>
-          </div>
-          <button type="submit" class="btn btn-success">Save</button>
-        </form>
+          <form @submit.prevent="changeBlog()">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" name="title" id="" class="form-control" placeholder="enter title..." aria-describedby="helpId" v-model="blogDetails.title" required>
+            </div>
+            <div class="form-group">
+              <label for="body">Body</label>
+              <input type="text" name="body" id="" class="form-control" placeholder="enter body..."   aria-describedby="helpId" v-model="blogDetails.body" required>
+            </div>
+            <button type="submit" class="btn btn-success">Save</button>
+          </form>
+        </div>
+
       </div>
     </div> 
     <div class="row">
@@ -37,7 +41,7 @@
       </div>
     </div>
   </div>
-  
+
 </template>
 
 
@@ -69,6 +73,8 @@ export default {
       this.$store.dispatch("deleteBlog", this.blogDetails._id);
     },
     changeBlog() {
+      console.log("changeBlog",this.$auth.userInfo.email )
+      console.log(this.blogDetails.creator.email)
       //console.log("changeBlog", this.blogDetails)
       //this.$router.push({ name: "Home" });
       this.$store.dispatch("changeBlog", this.blogDetails);

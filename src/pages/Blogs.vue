@@ -19,6 +19,7 @@ export default {
   },
   computed: {
     blogs() {
+      //console.log("blogs", this.$store.state.blogs)
       return this.$store.state.blogs 
       //.sort((a, b) => a.make.charCodeAt(0) - b.make.charCodeAt(0));
     }
